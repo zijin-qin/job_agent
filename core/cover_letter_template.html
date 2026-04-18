@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+  @page { size: letter; margin: 0.75in 1in; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10.5pt; color: #222; line-height: 1.45; }
+
+  .header { margin-bottom: 10px; }
+  .header h1 { font-size: 15pt; font-weight: 700; letter-spacing: 0.3px; margin-bottom: 3px; }
+  .header .contact { font-size: 9pt; color: #444; }
+  .header .contact a { color: #444; text-decoration: none; }
+  .header .contact a[href^="http"] { text-decoration: underline; }
+  .header .contact span { margin: 0 4px; color: #bbb; }
+
+  .divider { border: none; border-top: 1.5px solid #222; margin: 8px 0 12px 0; }
+
+  .date { font-size: 10pt; color: #444; margin-bottom: 12px; }
+  .salutation { font-size: 10.5pt; margin-bottom: 12px; }
+
+  .body p { font-size: 10.5pt; margin-bottom: 10px; text-align: left; }
+
+  .closing { margin-top: 16px; }
+  .closing .sign-off { margin-bottom: 22px; }
+  .closing .name { font-size: 10.5pt; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>{{ personal.name }}</h1>
+  <div class="contact">
+    {% if personal.location %}{{ personal.location }}{% endif %}
+    {% if personal.location and personal.email %}<span>|</span>{% endif %}
+    {% if personal.email %}<a href="mailto:{{ personal.email }}">{{ personal.email }}</a>{% endif %}
+    {% if personal.phone %}<span>|</span> {{ personal.phone }}{% endif %}
+    {% if personal.linkedin %}<span>|</span> <a href="{{ personal.linkedin }}">LinkedIn</a>{% endif %}
+    {# GitHub intentionally omitted from cover letter #}
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<div class="date">{{ date }}</div>
+
+<div class="salutation">Dear Hiring Manager,</div>
+
+<div class="body">
+  {% for paragraph in paragraphs %}
+  <p>{{ paragraph }}</p>
+  {% endfor %}
+</div>
+
+<div class="closing">
+  <div class="sign-off">Sincerely,</div>
+  <div class="name">{{ personal.name }}</div>
+</div>
+
+</body>
+</html>

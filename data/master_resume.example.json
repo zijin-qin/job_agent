@@ -1,0 +1,81 @@
+{
+  "personal": {
+    "name": "YOUR_NAME",
+    "email": "YOUR_EMAIL",
+    "phone": "YOUR_PHONE",
+    "linkedin": "YOUR_LINKEDIN_URL",
+    "github": "YOUR_GITHUB_URL",
+    "location": "YOUR_CITY, STATE",
+    "citizenship": "YOUR_CITIZENSHIP_STATUS"
+  },
+  "summary": "",
+  "education": [
+    {
+      "degree": "YOUR_DEGREE",
+      "institution": "YOUR_UNIVERSITY",
+      "location": "YOUR_CITY, STATE",
+      "graduation_year": "Expected Month YEAR",
+      "relevant_courses": [
+        "Course 1",
+        "Course 2",
+        "Course 3"
+      ],
+      "honors": []
+    }
+  ],
+  "experience": [
+    {
+      "title": "YOUR_JOB_TITLE",
+      "company": "YOUR_COMPANY",
+      "location": "YOUR_CITY, STATE",
+      "start_date": "Month YEAR",
+      "end_date": "Month YEAR",
+      "is_remote": false,
+      "bullets": [
+        "Description of what you did and the impact it had.",
+        "Another accomplishment with context and outcome."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Project Name 1",
+      "date": "YEAR",
+      "tech_stack": ["Language", "Framework", "Tool"],
+      "github": "https://github.com/YOUR_USERNAME/YOUR_REPO",
+      "bullets": [
+        "What you built and how, with relevant technical detail.",
+        "Impact, outcome, or insight from the project."
+      ]
+    },
+    {
+      "name": "Project Name 2",
+      "date": "Month YEAR – Month YEAR",
+      "tech_stack": ["Language", "Framework", "Tool"],
+      "link": "https://your-project-website.com",
+      "github": "https://github.com/YOUR_USERNAME/YOUR_REPO",
+      "bullets": [
+        "What you built and how, with relevant technical detail.",
+        "Impact, outcome, or insight from the project."
+      ]
+    },
+    {
+      "name": "Project Name 3",
+      "date": "YEAR",
+      "tech_stack": ["Language", "Framework", "Tool"],
+      "bullets": [
+        "What you built and how, with relevant technical detail."
+      ]
+    }
+  ],
+  "skills": {
+    "languages": ["Language1", "Language2", "Language3"],
+    "libraries": ["Library1", "Library2", "Library3"],
+    "methods": ["Method1", "Method2", "Method3"],
+    "tools_and_platforms": ["Tool1", "Tool2", "Tool3"],
+    "soft_skills": ["Skill1", "Skill2", "Skill3"]
+  },
+  "certifications": [],
+  "volunteer": [],
+  "languages_spoken": ["English"]
+}
