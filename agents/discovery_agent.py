@@ -23,12 +23,12 @@ def _get_hours_since_last_run() -> int:
         last = datetime.fromisoformat(_LAST_RUN_PATH.read_text().strip())
         elapsed = (datetime.now(timezone.utc) - last).total_seconds() / 3600
         hours = max(1, int(elapsed) + 1)  # round up, minimum 1
-        return hours
+        return min(hours, config.MAX_HOURS_OLD)
     except Exception:
         return 24
 
 
-def _record_run_time() -> None:
+def record_run_time() -> None:
     _LAST_RUN_PATH.write_text(datetime.now(timezone.utc).isoformat())
 
 
@@ -51,6 +51,36 @@ def _filter_overqualified(jobs: list[JobPost]) -> list[JobPost]:
     return kept
 
 
+_SCAM_RE = re.compile(
+    r'commission[\s-]*only'
+    r'|unlimited\s+(?:earning|income|compensation)\s+potential'
+    r'|be\s+your\s+own\s+boss'
+    r'|own\s+your\s+own\s+(?:business|practice)'
+    r'|network\s+marketing'
+    r'|multi[\s-]?level\s+marketing'
+    r'|\bmlm\b'
+    r'|(?:life|health)\s+insurance\s+(?:sales\s+)?agent'  # classic MLM disguised as "Financial Analyst"
+    r'|insurance\s+sales\s+representative'
+    r'|independent\s+(?:insurance\s+)?agent\s+(?:opportunity|position)'
+    r'|recruit\s+(?:and\s+)?train\s+(?:your\s+own\s+)?(?:team|agents)'
+    r'|make\s+\$[\d,]+\s*(?:per\s+(?:week|day)|\/(?:wk|day))\s+(?:from\s+home|working)',
+    re.IGNORECASE,
+)
+
+def _filter_scams(jobs: list[JobPost]) -> list[JobPost]:
+    kept, removed = [], 0
+    for job in jobs:
+        desc = (job.description or "") + " " + job.title
+        if _SCAM_RE.search(desc):
+            removed += 1
+            logger.debug("Scam-filtered: %s @ %s", job.title, job.company)
+        else:
+            kept.append(job)
+    if removed:
+        print(f"[discovery] Filtered out {removed} likely-scam job(s).")
+    return kept
+
+
 async def discover_jobs() -> list[JobPost]:
     """
     1. Scrape all roles from all job boards via jobspy.
@@ -60,7 +90,6 @@ async def discover_jobs() -> list[JobPost]:
     """
     hours = _get_hours_since_last_run()
     print(f"[discovery] Searching jobs posted in the last {hours}h (since last run).")
-    _record_run_time()
 
     logger.info("Starting job discovery for %d target roles...", len(config.TARGET_ROLES))
 
@@ -91,6 +120,9 @@ async def discover_jobs() -> list[JobPost]:
 
     # Filter out jobs requiring 5+ years experience
     raw_jobs = _filter_overqualified(raw_jobs)
+
+    # Filter out obvious scam / MLM postings
+    raw_jobs = _filter_scams(raw_jobs)
 
     # Deduplicate against all previously seen jobs
     new_jobs = await deduplicator.filter_new_jobs(raw_jobs)

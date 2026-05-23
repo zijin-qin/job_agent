@@ -120,7 +120,6 @@ async def insert_discovered_job(job: JobPost) -> None:
             ),
         )
         await db.commit()
-    await mark_seen(job.job_url)
 
 
 async def update_job_status(job_id: str, status: str) -> None:
@@ -146,6 +145,14 @@ async def mark_applied(
         await db.execute(
             "UPDATE jobs SET status = ? WHERE id = ?", (STATUS_APPLIED, job_id)
         )
+        async with db.execute("SELECT job_url FROM jobs WHERE id = ?", (job_id,)) as cur:
+            row = await cur.fetchone()
+        if row:
+            h = _url_hash(row[0])
+            now2 = datetime.utcnow().isoformat() + "Z"
+            await db.execute(
+                "INSERT OR IGNORE INTO seen_jobs (url_hash, first_seen) VALUES (?, ?)", (h, now2)
+            )
         await db.commit()
 
 

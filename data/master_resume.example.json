@@ -50,7 +50,7 @@
     },
     {
       "name": "Project Name 2",
-      "date": "Month YEAR – Month YEAR",
+      "date": "Month YEAR - Month YEAR",
       "tech_stack": ["Language", "Framework", "Tool"],
       "link": "https://your-project-website.com",
       "github": "https://github.com/YOUR_USERNAME/YOUR_REPO",

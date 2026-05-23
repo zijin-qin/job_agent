@@ -106,7 +106,7 @@
   <div class="entry">
     <div class="entry-header">
       <span class="entry-title">{{ proj.name }}{% set proj_link = proj.link or proj.github %}{% if proj_link %} <span style="font-weight:400;">|</span> <a href="{{ proj_link }}" class="proj-link">{% if "github.com" in proj_link %}GitHub{% else %}Website{% endif %}</a>{% endif %}{% if proj.github and proj.link %} <span style="font-weight:400;">|</span> <a href="{{ proj.github }}" class="proj-link">GitHub</a>{% endif %}</span>
-      {% if proj.date %}<span class="entry-date">{{ proj.date }}</span>{% endif %}
+      {% if proj.date %}<span class="entry-date">{{ proj.date | replace("\u2013", "-") | replace("\u2014", "-") }}</span>{% endif %}
     </div>
     {% if proj.tech_stack %}<div class="entry-subtitle">{{ proj.tech_stack | join(" &middot; ") }}</div>{% endif %}
     {% if proj.bullets %}

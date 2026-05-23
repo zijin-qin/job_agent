@@ -28,32 +28,27 @@ PERSONAL_CITIZENSHIP = os.getenv("PERSONAL_CITIZENSHIP", "")
 
 # --- Search Parameters ---
 TARGET_ROLES = [
-    "Data Analyst",
-    "Data Scientist",
-    "Business Analyst",
-    "Product Analyst",
-    "Analytics Engineer",
-    "Machine Learning Engineer",
-    "Associate Product Manager",
-    "Strategy Operations Analyst",
-    "Junior Data Analyst",
-    "Research Analyst",
-    "Business Intelligence Analyst",
-    "Reporting Analyst",
-    "Operations Analyst",
-    "Quantitative Analyst",
-    "Data Coordinator",
-    "Bilingual Data Analyst",
-    "Bilingual Business Analyst",
+    "analyst",
+    "data scientist",
+    "data engineer",
+    "machine learning engineer",
+    "AI engineer",
+    "software engineer",
+    "solutions engineer",
+    "customer success",
+    "implementation specialist",
+    "technical support engineer",
+    "developer advocate",
 ]
-JOBS_PER_DAY = 15
+JOBS_PER_DAY = 20
 HOURS_OLD = 24          # Only fetch jobs posted in the last 24 hours (run once per day)
+MAX_HOURS_OLD = 168     # Cap lookback at 1 week even after a long gap — older postings are stale
 RESULTS_PER_ROLE = 15   # Per role per scrape run (deduped down to JOBS_PER_DAY total)
 LOCATION = "United States"
 REMOTE_ONLY = False     # Set True to filter to remote-only jobs
 
 # --- Job Sources ---
-SCRAPE_SITES = ["linkedin", "indeed", "zip_recruiter"]
+SCRAPE_SITES = ["linkedin", "indeed"]
 USE_HANDSHAKE = os.getenv("USE_HANDSHAKE", "false").lower() == "true"
 
 # --- Gemini Models ---

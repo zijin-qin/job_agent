@@ -2,6 +2,7 @@
 data/job_agent.db
 data/outputs/
 data/master_resume.json
+data/master_resume_*.json
 data/handshake_session.json
 data/applications.csv
 __pycache__/

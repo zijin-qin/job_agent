@@ -163,6 +163,7 @@ async def run_daily_pipeline(dry_run: bool = False) -> None:
             skipped_count += 1
 
     # ── Daily Summary ──────────────────────────────────────────────────────────
+    discovery_agent.record_run_time()
     stats = await db.get_daily_stats()
     print(f"\n{'─'*50}")
     print(f"[job_agent] Daily Summary — {stats['date']}")
